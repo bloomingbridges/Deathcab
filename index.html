@@ -1,14 +1,22 @@
 <!doctype html>
 <html>
     <head>
-        <title>d e a th c a b</title>
+        <title>d e a t h c a b</title>
         <link href="style.css" rel="stylesheet" />
     </head>
     <body>
-        <h1>You have been diagnosed with lung cancer</h1>
-        <h2>You are unable to afford treatment</h2>
-        <h3>You are in a taxi</h3>
-        <p>TYPE A <em>GAME MODE</em> TO START</p>
-        <script src="lib/deathcab.js" type="text/javascript"></script>
+        <canvas id="scenery"></canvas>
+
+        <section id="intro">
+            <h1>You have been diagnosed with lung cancer</h1>
+            <h2>You are unable to afford treatment</h2>
+            <h3>You are in control of a taxi</h3>
+            <p>choose <em>life</em> or <em>death</em> to begin</p>
+        </section>
+        <input id="prompt" type="text" />
+        <script src="lib/vendor/zepto.min.js" type="text/javascript"></script>
+        <script src="lib/vendor/state-machine.min.js"></script>
+        <script src="lib/vendor/three.min.js" type="text/javascript"></script>
+        <script src="lib/main.js" type="text/javascript"></script>
     </body>
 </html>
