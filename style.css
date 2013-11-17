@@ -17,8 +17,8 @@ body {
     text-transform: uppercase;
     text-align: center;
     background-color: #272D39;
-    margin-top: 100px;
-    -webkit-transition: all 2s ease-out;
+    height: 100%;
+    overflow: hidden;
 }
 
 h1, h2, h3 {
@@ -34,11 +34,24 @@ em {
     font-style: normal;
 }
 
+a:link, a:active, a:visited {
+    color: #486761;
+    text-decoration: none;
+    padding: 1em;
+    -webkit-transition: all 1s ease-in-out;
+}
+
+a:focus {
+    background-color: white;
+    outline: none;
+}
+
 input[type=text]#prompt {
     color: white;
     font-size: 3em;
     text-align: center;
     text-transform: uppercase;
+    line-height: 1.5em;
     -webkit-appearance: none;
     background: none;
     border: none;
@@ -50,7 +63,9 @@ input[type=text]#prompt {
     width: 100%;
 }
 
-input[type=text]:focus {
+input[type=text]#prompt:focus {
+    color: #98B1B5;
+    background-color: white;
     outline: none;
 }
 
@@ -65,5 +80,30 @@ input[type=text]:focus {
 
 #intro {
     -webkit-transition: all 5s ease-out;
+    margin: 10%;
+    height: 40%;
     opacity: 1;
+}
+
+#hints {
+    list-style: none;
+    padding: 0;
+    position: fixed;
+    bottom: 20%;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 5s ease-out;
+}
+
+#hints.visible {
+    opacity: 1;
+    visibility: visible
+}
+
+#hints ul li {
+    color: #486761;
+    display: inline-block;
+    margin: 0 1em;
 }

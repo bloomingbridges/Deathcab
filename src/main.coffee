@@ -24,6 +24,7 @@ bindChoiceHandler = ->
       fsm.start(choice)
       $('#prompt').off()
       $('#intro').css 'opacity', 0
+      $('#hints').addClass 'visible'
 
 setupScenery = ->
   WIDTH = $(window).width()
