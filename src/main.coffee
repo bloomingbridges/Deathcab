@@ -13,7 +13,8 @@ $ ->
   console.log "Welcome to d e a t h c a b"
   setupScenery()
   bindChoiceHandler()
-  $('#prompt input').focus()
+  $('#prompt input').focus().click (event) ->
+    $('#prompt input').focus()
 
 bindChoiceHandler = ->
   $('#prompt').on 'keyup', (event) ->
@@ -25,6 +26,7 @@ bindChoiceHandler = ->
       clearPrompt()
       $('#intro').css 'opacity', 0
       $('#hints').addClass 'visible'
+      $('#scenery').removeClass 'dimmed'
 
 clearPrompt = ->
   $('#prompt input').val ""
@@ -41,22 +43,15 @@ setupScenery = ->
 
   renderer = new THREE.WebGLRenderer()
   renderer.setSize WIDTH, HEIGHT
-  renderer.setClearColor 0x272D39, 1
+  renderer.setClearColor 0x000000, 1
 
   scene = new THREE.Scene()
 
-  lineMaterial = new THREE.MeshLambertMaterial
-    color: 0x62495E
+  lineMaterial = new THREE.MeshBasicMaterial
+    color: 0xFFFFFF
+    wireframe: true
   sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 16, 16), lineMaterial)
   scene.add sphere
-  
-  pointLight = new THREE.PointLight( 0xFFFFFF )
-
-  pointLight.position.x = 10
-  pointLight.position.y = 50
-  pointLight.position.z = 130
-
-  scene.add(pointLight);
 
   camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR)
   camera.position.z = 300
