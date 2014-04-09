@@ -1,4 +1,8 @@
 
+#
+# Modules
+#
+
 fsm = StateMachine.create
   initial: 'parking',
   events: [
@@ -9,12 +13,21 @@ fsm = StateMachine.create
     onstart: (event, from, to, mode) ->
       console.log "You choose " + mode
 
+#
+# Entry Point
+#
+
 $ ->
   console.log "Welcome to d e a t h c a b"
   setupScenery()
   bindChoiceHandler()
   $('#prompt input').focus().click (event) ->
     $('#prompt input').focus()
+
+
+#
+# Functions
+#
 
 bindChoiceHandler = ->
   $('#prompt').on 'keyup', (event) ->
