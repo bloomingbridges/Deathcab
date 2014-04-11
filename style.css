@@ -135,6 +135,7 @@ a:focus, a:hover {
     left: 0;
     width: 100%;
     line-height: 3em;
+    opacity: 0;
 }
 
 #total {
