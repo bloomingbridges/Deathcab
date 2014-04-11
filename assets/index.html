@@ -1,24 +1,23 @@
 <!doctype html>
 <html>
     <head>
-        <title>d e a t h c a b</title>
+        <title>D e a t h c a b</title>
         <meta charset="utf8"/>
         <link href="style.css" rel="stylesheet" />
     </head>
     <body>
         <section id="scenery" class="dimmed"></section>
-
         <section id="intro">
             <h1>You have been diagnosed with lung cancer</h1>
             <h2>You are unable to afford treatment</h2>
             <h3>You are in control of a taxi</h3>
-            <p>choose <em>life</em> or <em>death</em> to begin</p>
+            <p>choose <a>life</a> or <a>death</a> to begin</p>
         </section>
-        <section id="prompt">
-            <input type="text" />
+        <section id="interface">
+            <input id="prompt" type="text" />
             <aside id="hints">
                 <ul>
-                    <li><a href="#">change gear</a></li>
+                    <li class="xcore"><a href="#">change gear</a></li>
                     <li><a href="#">stop</a></li>
                     <li><a href="#">pick up</a></li>
                     <li><a href="#">tune in</a></li>
@@ -29,9 +28,7 @@
             <span id="taxometer">0,00€</span> / 
             <span id="total">0,00€</span>
         </section>
-        <script src="lib/vendor/zepto.min.js" type="text/javascript"></script>
-        <script src="lib/vendor/state-machine.min.js"></script>
-        <script src="lib/vendor/three.min.js" type="text/javascript"></script>
-        <script src="lib/deathcab.js" type="text/javascript"></script>
+        <script src="js/Libraries.js" type="text/javascript"></script>
+        <script src="js/Deathcab.js" type="text/javascript"></script>
     </body>
 </html>

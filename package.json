@@ -3,13 +3,17 @@
   "version": "0.0.1",
   "description": "",
   "repository": {
-        "type": "git",
-        "url": ""
-    },
+      "type": "git",
+      "url": ""
+  },
   "version": "0.0.1",
+  "dependencies": {
+    "node-static": "*"
+  },
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.6.1"
+    "gulp": "*",
+    "gulp-nodemon": "*",
+    "gulp-coffee": "*",
+    "gulp-concat": "*"
   }
 }

@@ -34,19 +34,21 @@ em {
     font-style: normal;
 }
 
-a:link, a:active, a:visited {
+a:link, a:visited {
     color: #486761;
     text-decoration: none;
     padding: 1em;
     -webkit-transition: all .6s ease-in-out;
 }
 
-a:focus, a:hover {
+a:focus, a:hover, a:active {
+    color: #98B1B5;
     background-color: white;
     outline: none;
+    cursor: pointer;
 }
 
-#prompt {
+#interface {
     position: fixed;
     bottom: 20%;
     left: 0;
@@ -55,7 +57,7 @@ a:focus, a:hover {
     background-color: black;
 }
 
-#prompt input {
+#prompt {
     color: white;
     font-size: 3em;
     text-align: center;
@@ -69,13 +71,12 @@ a:focus, a:hover {
     height: 0;
     margin-top: 0;
     display: block;
-    -webkit-transition: all .6s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
 }
 
-#prompt input:focus {
+#prompt:focus {
     color: #98B1B5;
     background-color: white;
-    outline: none;
     height: 40%;
 }
 
@@ -103,6 +104,10 @@ a:focus, a:hover {
 #intro p {
     background-color: black;
     padding: 0.5em;
+}
+
+#intro p a {
+    color: white;
 }
 
 #hints {

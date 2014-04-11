@@ -21,8 +21,7 @@ $ ->
   console.log "Welcome to d e a t h c a b"
   setupScenery()
   bindChoiceHandler()
-  $('#prompt input').focus().click (event) ->
-    $('#prompt input').focus()
+  $('#prompt').focus()
 
 
 #
@@ -40,6 +39,8 @@ bindChoiceHandler = ->
       $('#intro').css 'opacity', 0
       $('#hints').addClass 'visible'
       $('#scenery').removeClass 'dimmed'
+  $('#prompt').on 'click', (event) ->
+    $('#prompt').focus()
 
 clearPrompt = ->
   $('#prompt input').val ""
