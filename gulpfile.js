@@ -7,7 +7,11 @@ var gulp = require('gulp')
 var sources = {
     libraries : 'src/lib/*.js',
        assets : ['assets/*/*', 'assets/*'],
-        beans : ['src/vehicle.coffee', 'src/taxi.coffee', 'src/main.coffee']
+        beans : [ 'src/world.coffee'
+                , 'src/prompt.coffee'
+                , 'src/vehicle.coffee'
+                , 'src/taxi.coffee'
+                , 'src/main.coffee']
 };
 
 gulp.task('compile', function() {

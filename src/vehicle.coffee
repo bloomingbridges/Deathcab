@@ -1,7 +1,4 @@
 
-fsm = StateMachine.create
-
-
 class Vehicle
 
   forwards: [1, 0]
