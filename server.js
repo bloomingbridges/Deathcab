@@ -1,7 +1,7 @@
 
 var static = require('node-static');
 
-var files = new static.Server('./build/public');
+var files = new static.Server('./build/public', { cache: 0 });
 
 require('http').createServer(function (request, response) {
     request.addListener('end', function () {

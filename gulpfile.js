@@ -7,13 +7,13 @@ var gulp = require('gulp')
 var sources = {
     libraries : 'src/lib/*.js',
        assets : ['assets/*/*', 'assets/*'],
-        beans : 'src/*.coffee'
+        beans : ['src/vehicle.coffee', 'src/taxi.coffee', 'src/main.coffee']
 };
 
 gulp.task('compile', function() {
     return gulp.src(sources.beans)
+        .pipe(concat('Deathcab.coffee'))
         .pipe(coffee())
-        .pipe(concat('Deathcab.js'))
         .pipe(gulp.dest('build/public/js'))
 });
 
@@ -38,7 +38,7 @@ gulp.task('serve', function() {
 gulp.task('watch', function() {
     gulp.watch(sources.beans, ['compile']);
     gulp.watch(sources.assets, ['assets']);
-    gulp.watch(sources.libraries, ['libraries']);
+    gulp.watch(sources.libraries, ['glue']);
 });
 
 gulp.task('build'  , ['assets', 'glue', 'compile']);

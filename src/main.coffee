@@ -1,19 +1,5 @@
 
 #
-# Modules
-#
-
-fsm = StateMachine.create
-  initial: 'parking',
-  events: [
-    { name: 'start', from: 'parking', to: 'driving' }
-    { name: 'stop', from: 'driving', to: 'parking' }
-  ],
-  callbacks:
-    onstart: (event, from, to, mode) ->
-      console.log "You choose " + mode
-
-#
 # Entry Point
 #
 
@@ -22,7 +8,6 @@ $ ->
   setupScenery()
   bindChoiceHandler()
   $('#prompt').focus()
-
 
 #
 # Functions
@@ -33,14 +18,18 @@ bindChoiceHandler = ->
     choice = $(event.target).val()
     if (choice is "life" || choice is "death")
       mode = choice
-      fsm.start(choice)
       $(event.target).off()
       clearPrompt()
       $('#intro').css 'opacity', 0
       $('#hints').addClass 'visible'
       $('#scenery').removeClass 'dimmed'
-  $('#prompt').on 'click', (event) ->
+  $('#prompt_container').on 'click', (event) ->
     $('#prompt').focus()
+  $('#prompt').on 'focus', (event) ->
+    $('#prompt_container').addClass 'active'
+  $('#prompt').on 'blur', (event) ->
+    $('#prompt_container').removeClass 'active'
+  $('#prompt_container').trigger 'click'
 
 clearPrompt = ->
   $('#prompt input').val ""
@@ -61,15 +50,12 @@ setupScenery = ->
 
   scene = new THREE.Scene()
 
-  lineMaterial = new THREE.MeshBasicMaterial
-    color: 0xFFFFFF
-    wireframe: true
-  sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 16, 16), lineMaterial)
-  scene.add sphere
-
   camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR)
   camera.position.z = 300
   scene.add camera
+
+  taxi = new Taxi()
+  scene.add taxi.mesh
 
   scenery.append renderer.domElement
   renderer.render scene, camera

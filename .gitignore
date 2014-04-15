@@ -1,5 +1,4 @@
 .DS_Store
-lib/
+
 node_modules/
-src/main.map
-src/main.js
+build/
