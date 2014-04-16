@@ -51,6 +51,7 @@ class World
     @taxi.update deltaTime
     @manageTraffic deltaTime
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
+    @camera.position.x = @taxi.mesh.position.x - 300
     @renderer.render @scene, @camera
 
   manageTraffic: (dT) ->

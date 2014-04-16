@@ -1,7 +1,7 @@
 
 class Vehicle
 
-  forwards: [1, 0]
+  forwards:  [1, 0]
   topSpeeds: [0, 10, 30, 50, 100]
   waypoints: [] 
   gear: 0
@@ -19,3 +19,9 @@ class Vehicle
 
   setGear: (newGear) ->
     @gear = newGear unless newGear > 4
+
+  gearUp: ->
+    @gear = @gear + 1 unless (@gear + 1 > 4)
+
+  gearDown: ->
+    @gear = @gear - 1 unless (@gear - 1 < 0)

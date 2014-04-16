@@ -151,6 +151,11 @@ a:focus, a:hover, a:active {
     width: 100%;
     line-height: 3em;
     opacity: 0;
+    -webkit-transition: opacity 5s ease-out;
+}
+
+#hud.visible {
+    opacity: 1.0;
 }
 
 #total {
