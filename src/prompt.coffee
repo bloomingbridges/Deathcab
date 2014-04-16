@@ -25,7 +25,7 @@ class Prompt
     choice = @element.val()
     if (@options.indexOf(choice) > -1) 
       console.log "CHOICE:", choice
-      events.trigger 'choice', choice
+      E.trigger 'choice', choice
 
   onFocus: (event) =>
     $('#prompt_container').addClass 'active'

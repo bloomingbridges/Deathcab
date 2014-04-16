@@ -58,12 +58,12 @@ class World
     for row, i in @streets
       for col, j in row
         if col is 1
-          tile = new THREE.Mesh geometries.street, materials.street
+          tile = new THREE.Mesh G.street, M.street
           tile.position.x = i * 100
           tile.position.z = j * 100
           @scene.add tile
         else if col is 0
-          tile = new THREE.Mesh geometries.building, materials.building
+          tile = new THREE.Mesh G.building, M.building
           tile.position.x = i * 100
           tile.position.z = j * 100
           tile.position.y = 50

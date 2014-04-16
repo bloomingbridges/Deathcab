@@ -5,7 +5,7 @@ class Deathcab
     console.log "Welcome to d e a t h c a b"
     @world = new World $('#scenery')
     @prompt = new Prompt $('#prompt')
-    events.bind 'choice', @mediate
+    E.bind 'choice', @mediate
     @update()
   
   mediate: (choice) =>

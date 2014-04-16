@@ -7,7 +7,7 @@ class Vehicle
   gear: 0
 
   constructor: ->
-    @mesh = new THREE.Mesh geometries.vehicle, materials.vehicle
+    @mesh = new THREE.Mesh G.vehicle, M.vehicle
     @mesh.position.y = 25
 
   update: (dT) ->
