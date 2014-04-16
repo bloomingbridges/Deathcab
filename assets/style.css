@@ -108,18 +108,16 @@ a:focus, a:hover, a:active {
 
 #intro {
     -webkit-transition: all 5s ease-out;
-    margin: 10%;
+    margin: 10% 0;
     height: 40%;
     opacity: 1;
 }
 
 #intro p {
-    background-color: black;
+    width: 100%;
+    color: #62625B;
     padding: 0.5em;
-}
-
-#intro p a {
-    color: magenta;
+    display: block;
 }
 
 #hints {
