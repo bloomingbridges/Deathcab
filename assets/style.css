@@ -43,8 +43,8 @@ a:link, a:visited {
 }
 
 a:focus, a:hover, a:active {
-    color: #98B1B5;
-    background-color: white;
+    color: white;
+    background-color: #4D434A;
     outline: none;
     cursor: pointer;
 }
@@ -61,18 +61,17 @@ a:focus, a:hover, a:active {
 #prompt_container {
     height: 0;
     background: #000;
-    border: none;
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #62625B;
     -webkit-transition: all .3s ease-in-out;
     overflow: hidden;
 }
 
 #prompt_container.active {
     height: 100px;
-    border-color: magenta;
 }
 
 #prompt {
+    color: #6F8474;
     font-size: 3em;
     text-align: center;
     text-transform: uppercase;
@@ -84,18 +83,13 @@ a:focus, a:hover, a:active {
     margin-top: 0;
     display: block;
     outline: none;
-    background-color: #000;
+    background-color: #413447;
     -webkit-transition: background-color .3s ease-in-out;
 }
 
-#prompt::-webkit-selection {
-    color: inherit;
-    background: #ff0000;
-}
-
 #prompt:focus {
-    color: #98B1B5;
-    background-color: #fff;
+    color: #fff;
+    background-color: #4D434A;
 }
 
 #scenery {
