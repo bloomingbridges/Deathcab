@@ -25,12 +25,7 @@ class Prompt
     choice = @element.val()
     if (@options.indexOf(choice) > -1) 
       console.log "CHOICE:", choice
-      if (choice is "life" || choice is "death")
-        $('#intro').css 'opacity', 0
-        $('#hints').addClass 'visible'
-        $('#scenery').removeClass 'dimmed'
-        @expandOptions()
-        @wipe()
+      events.trigger 'choice', choice
 
   onFocus: (event) =>
     $('#prompt_container').addClass 'active'

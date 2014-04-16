@@ -46,6 +46,7 @@ class World
 
   update: ->
     @taxi.update 0.1
+    @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @manageTraffic()
     @renderer.render @scene, @camera
 
