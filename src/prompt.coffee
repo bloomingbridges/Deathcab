@@ -13,6 +13,7 @@ class Prompt
     @element.on 'blur', @onFocusLost
     $('#prompt_container').on 'mouseover', @onActivate
     $('#interface').on 'click', @onActivate
+    $('a[data-hint]').on 'click', @onTrigger
 
   wipe: ->
     @element.val ""
@@ -39,3 +40,8 @@ class Prompt
 
   onActivate: (event) =>
     $('#prompt').focus()
+
+  onTrigger: (event) =>
+    event.preventDefault()
+    @element.val event.target.dataset.hint
+    @element.trigger 'keyup'
