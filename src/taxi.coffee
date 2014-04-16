@@ -5,10 +5,12 @@ class Taxi extends Vehicle
     name: "Howard"
 
   constructor: () ->
-    geometry = new THREE.SphereGeometry 50, 16, 16
+    geometry = new THREE.SphereGeometry 10, 16, 16
     material = new THREE.MeshBasicMaterial
       color: 0xFFB300
+      wireframe: true
     @mesh = new THREE.Mesh geometry, material
+    @mesh.position.y = 20
 
     @fsm = StateMachine.create
       initial: 'parking',
