@@ -27,10 +27,10 @@ class World
     @scene = new THREE.Scene()
     @generateCity()
     
-    @taxi = new Taxi()
+    @taxi = new Taxi
     @scene.add @taxi.mesh
     
-    car = new Vehicle()
+    car = new Vehicle
     car.mesh.position.z = 200
     car.setGear 1
     @traffic.push car
@@ -42,17 +42,20 @@ class World
     @camera.lookAt new THREE.Vector3 0, 0, 0
     @scene.add @camera
 
+    @clock = new THREE.Clock
+
     @element.append @renderer.domElement
 
   update: ->
-    @taxi.update 0.1
+    deltaTime = @clock.getDelta()
+    @taxi.update deltaTime
+    @manageTraffic deltaTime
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
-    @manageTraffic()
     @renderer.render @scene, @camera
 
-  manageTraffic: ->
+  manageTraffic: (dT) ->
     for car in @traffic
-      car.update 0.1
+      car.update dT
 
   generateCity: ->
     for row, i in @streets

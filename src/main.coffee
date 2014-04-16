@@ -11,8 +11,8 @@ class Deathcab
   mediate: (choice) =>
     if (choice is "life" || choice is "death")
       @start()
-    else if (choice is "test")
-      console.log choice
+    else if (choice is "stop")
+      @world.taxi.setGear 0
 
   start: =>
     $('#intro').css 'opacity', 0
