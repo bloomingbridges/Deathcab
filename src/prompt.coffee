@@ -11,6 +11,8 @@ class Prompt
     @element.on 'keyup', @onInput
     @element.on 'focus', @onFocus
     @element.on 'blur', @onFocusLost
+    $('#prompt_container').on 'mouseover', @onActivate
+    $('#interface').on 'click', @onActivate
 
   onInput: (event) ->
     choice = $(event.target).val()
@@ -25,6 +27,9 @@ class Prompt
 
   onFocusLost: (event) ->
     $('#prompt_container').removeClass 'active'
+
+  onActivate: (event) ->
+    $('#prompt').focus()
 
   clear = ->
     $(@element).val ""

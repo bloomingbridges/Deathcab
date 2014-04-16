@@ -7,7 +7,8 @@ var gulp = require('gulp')
 var sources = {
     libraries : 'src/lib/*.js',
        assets : ['assets/*/*', 'assets/*'],
-        beans : [ 'src/world.coffee'
+        beans : [ 'src/shared.coffee'
+                , 'src/world.coffee'
                 , 'src/prompt.coffee'
                 , 'src/vehicle.coffee'
                 , 'src/taxi.coffee'

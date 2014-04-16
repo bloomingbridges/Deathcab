@@ -1,19 +1,19 @@
 
-world = new World $('#scenery')
-taxi = new Taxi()
-world.scene.add taxi.mesh
-prompt = new Prompt $('#prompt')
+class Deathcab
   
-update = ->
-  world.update()
-  rAFID = requestAnimationFrame update
+  constructor: ->
+    console.log "Welcome to d e a t h c a b"
+    @world = new World $('#scenery')
+    @prompt = new Prompt $('#prompt')
+    @update()
+  
+  update: =>
+    @world.update()
+    @rAFID = requestAnimationFrame @update
+
 
 #
-# Entry Point
+# Entry Point (DOM ready)
 #
 
-$ ->
-  console.log "Welcome to d e a t h c a b"
-  rAFID = requestAnimationFrame update
-  $('#prompt_container').on 'click', (event) ->
-    $('#prompt').focus()
+$ -> new Deathcab

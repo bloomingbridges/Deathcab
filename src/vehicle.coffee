@@ -7,19 +7,15 @@ class Vehicle
   gear: 0
 
   constructor: ->
-    geometry = new THREE.SphereGeometry 50, 16, 16
-    material = new THREE.MeshBasicMaterial
-      color: 0xFFFFFF
-      wireframe: true
-    @mesh = new THREE.Mesh geometry, material
+    @mesh = new THREE.Mesh geometries.vehicle, materials.vehicle
+    @mesh.position.y = 25
 
   update: (dT) ->
-    @mesh.position.x += forwards[0] * @getSpeed * dT
-    @mesh.position.y += forwards[1] * @getSpeed * dT
+    @mesh.position.x += @forwards[0] * @getSpeed() * dT
+    @mesh.position.z += @forwards[1] * @getSpeed() * dT
 
   getSpeed: ->
     return @topSpeeds[@gear]
 
   setGear: (newGear) ->
-    gear = newGear unless newGear > 4
-
+    @gear = newGear unless newGear > 4

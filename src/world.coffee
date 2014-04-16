@@ -26,6 +26,15 @@ class World
 
     @scene = new THREE.Scene()
     @generateCity()
+    
+    @taxi = new Taxi()
+    @scene.add @taxi.mesh
+    
+    car = new Vehicle()
+    car.mesh.position.z = 200
+    car.setGear 1
+    @traffic.push car
+    @scene.add car.mesh
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.x = -300
@@ -36,17 +45,27 @@ class World
     @element.append @renderer.domElement
 
   update: ->
+    @taxi.update 0.1
+    @manageTraffic()
     @renderer.render @scene, @camera
 
+  manageTraffic: ->
+    for car in @traffic
+      car.update 0.1
+
   generateCity: ->
-    geometry = new THREE.CubeGeometry 100, 1, 100
-    streetMaterial = new THREE.MeshBasicMaterial color: 0x666666
     for row, i in @streets
       for col, j in row
         if col is 1
-          tile = new THREE.Mesh geometry, streetMaterial
+          tile = new THREE.Mesh geometries.street, materials.street
           tile.position.x = i * 100
           tile.position.z = j * 100
+          @scene.add tile
+        else if col is 0
+          tile = new THREE.Mesh geometries.building, materials.building
+          tile.position.x = i * 100
+          tile.position.z = j * 100
+          tile.position.y = 50
           @scene.add tile
 
     

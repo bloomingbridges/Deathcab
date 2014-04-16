@@ -1,16 +1,12 @@
 
 class Taxi extends Vehicle
   
-  passenger: 
+  _passenger: 
     name: "Howard"
 
-  constructor: () ->
-    geometry = new THREE.SphereGeometry 10, 16, 16
-    material = new THREE.MeshBasicMaterial
-      color: 0xFFB300
-      wireframe: true
-    @mesh = new THREE.Mesh geometry, material
-    @mesh.position.y = 20
+  constructor: ->
+    @mesh = new THREE.Mesh geometries.vehicle, materials.taxi
+    @mesh.position.y = 25
 
     @fsm = StateMachine.create
       initial: 'parking',
@@ -19,5 +15,5 @@ class Taxi extends Vehicle
         { name: 'stop', from: 'driving', to: 'parking' }
       ],
       callbacks:
-        onstart: (event, from, to, mode) ->
-          console.log "ENTERING " + mode
+        onstart: (event, from, to) ->
+          console.log "ENTERING " + to
