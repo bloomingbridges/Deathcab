@@ -37,6 +37,17 @@ W =
 
 
 #
+# Directions
+#
+
+D =
+  NORTH: [1,0]
+  EAST: [0,1]
+  SOUTH: [-1,0]
+  WEST: [0,-1]
+
+
+#
 # THREE.js Prefabs
 #
 # Hold geometry and material declarations respectively
@@ -69,3 +80,5 @@ E =
   trigger: (topic, args...) ->
     if @events[topic]?
       event.handler.apply event.context, args for event in @events[topic]
+
+
