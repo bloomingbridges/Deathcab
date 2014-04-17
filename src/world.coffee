@@ -69,6 +69,7 @@ class World
 
     @element.append @renderer.domElement
 
+
   update: ->
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
@@ -79,24 +80,25 @@ class World
     @manageTraffic deltaTime
     @renderer.render @scene, @camera
 
+
   trackTaxi: ->
     x = Math.floor(@taxi.mesh.position.x / 100)
-    z = Math.floor(@taxi.mesh.position.z / 100)
-    
-    $('#debug').html "<br />X: " + x + ", Z: " + z
-    if x is not @taxi.sectorX
-      @taxi.sectorX = x
+    if x != @taxi.sectorX
+      if x >= 0 and x < @tilesX
+        @taxi.sectorX = x
 
-    if z is not @taxi.sectorZ
-      @taxi.sectorZ = z
-    #   if z >= @tilesZ * -100 and -z <= 0
-    #   else
-    #     console.log "OUT OF BOUNDS!"
-    #     @taxi.setGear 0
+    z = Math.floor(@taxi.mesh.position.z / 100)
+    if z != @taxi.sectorZ
+      if z >= 0 and z < @tilesZ
+        @taxi.sectorZ = z
+
+    $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
+
 
   manageTraffic: (dT) ->
     for v in @traffic
       v.update dT
+
 
   generateWorldMap: (width, height) ->
     @tilesX = width
