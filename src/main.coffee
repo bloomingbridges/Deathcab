@@ -5,7 +5,7 @@ class Deathcab
   
   constructor: ->
     console.log "Welcome to d e a t h c a b"
-    @world = new World $('#scenery'), null
+    @world = new World $('#scenery'), W.DEFAULT
     @player = @world.taxi
     @prompt = new Prompt $('#prompt')
     E.bind 'choice', @mediate
@@ -37,7 +37,7 @@ class Deathcab
     else
       $('#hints li.xcore').hide()
       $('#prompt').blur()
-      @player.setGear 1
+      @player.setGear 2
     $('#hints').addClass 'visible'
     @prompt.expandOptions()
 

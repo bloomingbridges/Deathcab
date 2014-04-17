@@ -4,7 +4,7 @@
 #
 
 W = 
-  block: 
+  BLOCK: 
     width: 5
     height: 5
     tiles: [
@@ -15,22 +15,22 @@ W =
       [0,0,0,0,0]
     ]
 
-  default:
+  DEFAULT:
     width: 15
     height: 9
     tiles: [
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,5,0,5,0,5,5,0,5,0,5,0,5,0,0],
+      [0,5,0,5,0,5,5,0,5,0,5,5,5,5,0],
       [0,0,0,0,0,5,5,0,5,0,0,0,0,0,0],
-      [0,5,0,5,0,5,5,0,0,0,5,0,5,0,0],
+      [0,5,0,5,0,5,5,0,0,0,5,5,5,5,0],
       [0,0,0,0,0,0,0,0,5,0,0,0,0,0,0],
-      [0,5,0,5,0,5,0,0,5,0,5,0,5,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,5,0,5,0,5,0,0,5,0,5,0,5,0,0],
+      [0,5,0,5,0,5,5,0,5,0,5,5,0,5,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,5,0],
+      [0,5,0,5,0,5,5,0,5,0,5,5,5,5,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     ]
 
-  athens:
+  ATHENS:
     width: 1
     height: 1
     tiles: [[1]]
@@ -55,7 +55,7 @@ D =
 
 G =
   vehicle: new THREE.SphereGeometry 10, 8, 1
-  street: new THREE.CubeGeometry 100, 1, 100
+  street: new THREE.CubeGeometry 110, 1, 110
   building: new THREE.CubeGeometry 100, 100, 100
 
 M =
@@ -63,8 +63,8 @@ M =
     color: 0xFFFFFF
     wireframe: true
   taxi: new THREE.MeshBasicMaterial color: 0xFFB300
-  street: new THREE.MeshBasicMaterial color: 0x666666
-  building: new THREE.MeshBasicMaterial color: 0x151515
+  street: new THREE.MeshBasicMaterial color: 0x151515
+  building: new THREE.MeshLambertMaterial color: 0x666666
 
 
 #

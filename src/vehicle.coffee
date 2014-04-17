@@ -1,7 +1,7 @@
 
 class Vehicle
 
-  forwards:  [1, 0]
+  forwards:  D.EAST
   topSpeeds: [0, 10, 30, 50, 100]
   waypoints: [] 
   gear: 0

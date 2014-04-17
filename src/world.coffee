@@ -36,9 +36,14 @@ class World
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.x = -300
-    @camera.position.y = 300
+    @camera.position.y = 450
     @camera.lookAt new THREE.Vector3 0, 0, 0
     @scene.add @camera
+
+    @moon = new THREE.DirectionalLight 0x413447
+    @moon.intensity = 2.0
+    @moon.position.set(-1, 1, 0.5)
+    @scene.add @moon
 
     @clock = new THREE.Clock
 
@@ -48,7 +53,7 @@ class World
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
     @manageTraffic deltaTime
-    @camera.position.x = @taxi.mesh.position.x - 300
+    @camera.position.x = @taxi.mesh.position.x - 300 
     @camera.position.z = @taxi.mesh.position.z
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @renderer.render @scene, @camera
@@ -77,14 +82,14 @@ class World
       for col, j in row
         if col < 5
           tile = new THREE.Mesh G.street, M.street
-          tile.position.x = i * 100
+          tile.position.x = i * -100
           tile.position.z = j * 100
           @scene.add tile
         else
           tile = new THREE.Mesh G.building, M.building
-          tile.position.x = i * 100
+          tile.position.x = i * -100
+          tile.position.y = Math.random() * 50
           tile.position.z = j * 100
-          tile.position.y = 50
           @scene.add tile
 
     
