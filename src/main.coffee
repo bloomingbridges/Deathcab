@@ -5,7 +5,7 @@ class Deathcab
   
   constructor: ->
     console.log "Welcome to d e a t h c a b"
-    @world = new World $('#scenery')
+    @world = new World $('#scenery'), null
     @prompt = new Prompt $('#prompt')
     E.bind 'choice', @mediate
     @update()

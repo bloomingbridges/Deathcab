@@ -1,17 +1,9 @@
 
 class World
 
-  streets: [
-    [1,1,1,1,1],
-    [1,0,1,0,1],
-    [1,1,1,1,1],
-    [1,0,1,0,1],
-    [1,1,1,1,1]
-  ]
-
   traffic: []
 
-  constructor: (@element) ->
+  constructor: (@element, map) ->
     WIDTH = @element.width()
     HEIGHT = @element.height()
 
@@ -25,7 +17,13 @@ class World
     @renderer.setClearColor 0x000000, 1
 
     @scene = new THREE.Scene()
-    @generateCity()
+    if map
+      @tilesX = map.width
+      @tilesZ = map.height
+      @tiles = map.tiles
+    else
+      @generateWorldMap 5, 9
+    @placeTiles()
     
     @taxi = new Taxi
     @scene.add @taxi.mesh
@@ -50,23 +48,39 @@ class World
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
     @manageTraffic deltaTime
-    @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @camera.position.x = @taxi.mesh.position.x - 300
+    @camera.position.z = @taxi.mesh.position.z
+    @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @renderer.render @scene, @camera
 
   manageTraffic: (dT) ->
     for car in @traffic
       car.update dT
 
-  generateCity: ->
-    for row, i in @streets
+  generateWorldMap: (width, height) ->
+    @tilesX = width
+    @tilesY = height
+    map = []
+    for row in [0..height-1]
+      strip = []
+      for col in [0..width-1]
+        tile = if ((col+1) % 2 is 0) then 5 else 0
+        # TODO Add more sophisticated algorithm here
+        tile = 0 unless (row+1) % 2 is 0
+        strip[col] = tile
+      map.push strip
+    @tiles = map
+
+
+  placeTiles: ->
+    for row, i in @tiles
       for col, j in row
-        if col is 1
+        if col < 5
           tile = new THREE.Mesh G.street, M.street
           tile.position.x = i * 100
           tile.position.z = j * 100
           @scene.add tile
-        else if col is 0
+        else
           tile = new THREE.Mesh G.building, M.building
           tile.position.x = i * 100
           tile.position.z = j * 100
