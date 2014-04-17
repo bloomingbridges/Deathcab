@@ -7,7 +7,9 @@ class Taxi extends Vehicle
   constructor: ->
     @mesh = new THREE.Mesh G.vehicle, M.taxi
     @mesh.position.y = 25
-    @forwards = D.SOUTH
+    @sectorX = 0
+    @sectorY = 0
+    @forwards = D.EAST
 
     # @fsm = StateMachine.create
     #   initial: 'parking',

@@ -20,14 +20,14 @@ W =
     height: 9
     tiles: [
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,5,0,5,0,5,5,0,5,0,5,5,5,5,0],
-      [0,0,0,0,0,5,5,0,5,0,0,0,0,0,0],
-      [0,5,0,5,0,5,5,0,0,0,5,5,5,5,0],
-      [0,0,0,0,0,0,0,0,5,0,0,0,0,0,0],
-      [0,5,0,5,0,5,5,0,5,0,5,5,0,5,0],
+      [0,5,0,9,0,5,5,0,5,0,5,5,5,5,0],
+      [0,0,0,9,0,5,5,0,5,0,0,0,0,0,0],
+      [0,5,0,9,0,5,5,0,0,0,5,5,5,5,0],
+      [0,0,0,9,0,0,0,0,5,0,0,0,0,0,0],
+      [0,5,0,9,0,5,5,0,5,0,5,5,0,5,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,5,0],
-      [0,5,0,5,0,5,5,0,5,0,5,5,5,5,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      [0,5,0,9,0,5,5,0,5,0,5,5,5,5,0],
+      [0,0,0,9,0,0,0,0,0,0,0,0,0,0,0]
     ]
 
   ATHENS:
@@ -41,10 +41,10 @@ W =
 #
 
 D =
-  NORTH: [1,0]
-  EAST: [0,1]
-  SOUTH: [-1,0]
-  WEST: [0,-1]
+  NORTH: [0,-1]
+  EAST: [1,0]
+  SOUTH: [0,1]
+  WEST: [-1,0]
 
 
 #
@@ -55,7 +55,7 @@ D =
 
 G =
   vehicle: new THREE.SphereGeometry 10, 8, 1
-  street: new THREE.CubeGeometry 110, 1, 110
+  street: new THREE.CubeGeometry 110, 20, 110
   building: new THREE.CubeGeometry 100, 100, 100
 
 M =
@@ -63,7 +63,10 @@ M =
     color: 0xFFFFFF
     wireframe: true
   taxi: new THREE.MeshBasicMaterial color: 0xFFB300
-  street: new THREE.MeshBasicMaterial color: 0x151515
+  river: new THREE.MeshBasicMaterial color: 0x002244
+  street: new THREE.MeshLambertMaterial 
+    color: 0x151515
+    overdraw: true
   building: new THREE.MeshLambertMaterial color: 0x666666
 
 
