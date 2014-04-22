@@ -24,23 +24,16 @@ class World
     else
       @generateWorldMap 5, 9
     @placeTiles()
+
+    A.setGrid @tiles
+    A.setAcceptableTiles [0]
+    A.setIterationsPerCalculation 20
     
     @taxi = new Taxi
     @scene.add @taxi.mesh
-    @taxi.sectorZ = @tilesZ-1
-    
-    car = new Vehicle
-    car.mesh.position.x = 100
-    car.setGear 1
-    @traffic.push car
-    @scene.add car.mesh
-
-    car2 = new Vehicle
-    car2.mesh.position.z = 100
-    car2.forwards = D.SOUTH
-    car2.setGear 2
-    @traffic.push car2
-    @scene.add car2.mesh
+    E.bind 'tracking', @trackVehicle
+    @generateTraffic()
+    A.calculate()
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.y = 450
@@ -59,8 +52,8 @@ class World
     @darkness.shadowMapHeight = 512
     @scene.add @darkness
 
-    axes = new THREE.AxisHelper( 2000 )
-    @scene.add axes
+    # axes = new THREE.AxisHelper( 2000 )
+    # @scene.add axes
 
     @renderer.shadowMapEnabled = true;
     @renderer.shadowMapType = THREE.PCFShadowMap
@@ -76,29 +69,58 @@ class World
     @camera.position.x = @taxi.mesh.position.x
     @camera.position.z = @taxi.mesh.position.z + 300
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
-    @trackTaxi()
     @manageTraffic deltaTime
     @renderer.render @scene, @camera
 
 
-  trackTaxi: ->
-    x = Math.floor(@taxi.mesh.position.x / 100)
-    if x != @taxi.sectorX
-      if x >= 0 and x < @tilesX
-        @taxi.sectorX = x
+  trackVehicle: (driver, axis, sector) =>
+    if driver is @taxi.driver
+      $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
+    # else
+      # console.log driver + " : UPDATE = " + axis + " (#{sector})"
 
-    z = Math.floor(@taxi.mesh.position.z / 100)
-    if z != @taxi.sectorZ
-      if z >= 0 and z < @tilesZ
-        @taxi.sectorZ = z
 
-    $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
+  generateTraffic: ->
+
+    ghosts = [
+      {
+        name: "Blinky"
+        colour: 0xFF0000
+      },
+      {
+        name: "Pinky"
+        colour: 0xFF00CC, 
+      },
+      {
+        name: "Inky"
+        colour: 0x00CCFF,
+      },
+      {
+        name: "Clyde"
+        colour: 0xCCCC00
+      }
+    ]
+
+    for g, n in ghosts
+      car = new Vehicle g.colour, g.name
+      car.place n, 0, D.SOUTH
+      car.setGear 1
+      @handleLostVehicle car
+      @traffic.push car
+      @scene.add car.mesh
 
 
   manageTraffic: (dT) ->
     for v in @traffic
       v.update dT
+      # if v.waypoints.length == 0
+      #   @handleLostVehicle v
 
+
+  handleLostVehicle: (vehicle) ->
+    dest = @generateRandomDestinationForVehicle vehicle
+    A.findPath vehicle.sectorX, vehicle.sectorZ, dest.x, dest.y, vehicle.setRoute
+    A.calculate()
 
   generateWorldMap: (width, height) ->
     @tilesX = width
@@ -142,5 +164,25 @@ class World
           @scene.add tile
 
     
+  generateRandomDestinationForVehicle: (vehicle) ->
     
+    current = 
+      x: vehicle.sectorX
+      y: vehicle.sectorZ
+
+    point = 
+      x: current.x
+      y: current.y
+
+    while isReachable is false
+      point.x = Math.floor( Math.random() * (@tilesX-1) )
+      point.y = Math.floor( Math.random() * (@tilesZ-1) )
+      if point is not current
+        if @tiles[z][x] is 0
+          point.x = x
+          point.y = z
+          isReachable = true
+
+    console.log vehicle.driver + " : NEW DESTINATION = [#{point.x}, #{point.y}]"
+    return point
     

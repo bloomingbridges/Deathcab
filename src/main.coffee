@@ -4,8 +4,8 @@ class Deathcab
   xcore: false
   
   constructor: ->
-    console.log "Welcome to d e a t h c a b"
-    @world = new World $('#scenery'), W.DEFAULT
+    # console.log "Welcome to d e a t h c a b"
+    @world = new World $('#scenery'), W.BLOCK
     @player = @world.taxi
     @prompt = new Prompt $('#prompt')
     E.bind 'choice', @mediate

@@ -85,3 +85,9 @@ E =
       event.handler.apply event.context, args for event in @events[topic]
 
 
+#
+# EasyStar.js - A* Pathfinding Instance
+#
+
+A = new EasyStar.js()
+
