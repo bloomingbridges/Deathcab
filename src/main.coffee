@@ -37,7 +37,7 @@ class Deathcab
     else
       $('#hints li.xcore').hide()
       $('#prompt').blur()
-      @player.setGear 2
+      @player.startMeandering()
     $('#hints').addClass 'visible'
     @prompt.expandOptions()
 

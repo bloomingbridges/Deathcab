@@ -24,7 +24,7 @@ class Prompt
   onInput: (event) =>
     choice = @element.val()
     if (@options.indexOf(choice) > -1) 
-      console.log "CHOICE:", choice
+      console.log "CHOICE :", choice.toUpperCase()
       E.trigger 'choice', choice
 
   onFocus: (event) =>

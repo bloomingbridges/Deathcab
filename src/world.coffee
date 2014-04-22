@@ -33,7 +33,6 @@ class World
     @scene.add @taxi.mesh
     E.bind 'tracking', @trackVehicle
     @generateTraffic()
-    A.calculate()
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.y = 450
@@ -66,6 +65,8 @@ class World
   update: ->
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
+    if @taxi.meandering and @taxi.hasReachedFinalWaypoint()
+      @calculateNextTurn @taxi
     @camera.position.x = @taxi.mesh.position.x
     @camera.position.z = @taxi.mesh.position.z + 300
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
@@ -73,11 +74,8 @@ class World
     @renderer.render @scene, @camera
 
 
-  trackVehicle: (driver, axis, sector) =>
-    if driver is @taxi.driver
-      $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
-    # else
-      # console.log driver + " : UPDATE = " + axis + " (#{sector})"
+  trackVehicle: =>
+    $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
 
 
   generateTraffic: ->
@@ -104,23 +102,18 @@ class World
     for g, n in ghosts
       car = new Vehicle g.colour, g.name
       car.place n, 0, D.SOUTH
-      car.setGear 1
-      @handleLostVehicle car
+      @calculateNextTurn car
       @traffic.push car
       @scene.add car.mesh
+      car.startMeandering()
 
 
   manageTraffic: (dT) ->
     for v in @traffic
       v.update dT
-      # if v.waypoints.length == 0
-      #   @handleLostVehicle v
+      if v.meandering and v.hasReachedFinalWaypoint()
+        @calculateNextTurn v 
 
-
-  handleLostVehicle: (vehicle) ->
-    dest = @generateRandomDestinationForVehicle vehicle
-    A.findPath vehicle.sectorX, vehicle.sectorZ, dest.x, dest.y, vehicle.setRoute
-    A.calculate()
 
   generateWorldMap: (width, height) ->
     @tilesX = width
@@ -164,25 +157,53 @@ class World
           @scene.add tile
 
     
-  generateRandomDestinationForVehicle: (vehicle) ->
+  # generateRandomDestinationForVehicle: (vehicle) ->
     
-    current = 
+  #   current = 
+  #     x: vehicle.sectorX
+  #     y: vehicle.sectorZ
+
+  #   point = 
+  #     x: current.x
+  #     y: current.y
+
+  #   while isReachable is true
+  #     point.x = Math.floor( Math.random() * @tilesX )
+  #     point.y = Math.floor( Math.random() * @tilesZ )
+  #     if point is not current
+  #       if @tiles[z][x] is 0
+  #         point.x = x
+  #         point.y = z
+  #         isReachable = true
+
+  #   console.log vehicle.driver + " : NEW DESTINATION = [#{point.x}, #{point.y}]"
+  #   A.findPath vehicle.sectorX, vehicle.sectorZ, point.x, point.y, vehicle.setRoute
+  #   A.calculate()
+
+
+  calculateNextTurn: (vehicle) =>
+    # console.log "CALCULATING.."
+    dirs = [D.NORTH,D.EAST,D.SOUTH,D.WEST]
+    # TODO Make sure cars do not reverse
+    p = 
       x: vehicle.sectorX
       y: vehicle.sectorZ
+    acceptable = false
+    result = while acceptable is false
+      r = Math.floor( Math.random() * 4 )
+      probingDir = dirs[r]
+      probe =
+        x: p.x + probingDir[0]
+        y: p.y + probingDir[1]
+      if probe.y >= 0 and probe.y < @tilesZ
+        if probe.x >= 0 and probe.x < @tilesX
+          if @tiles[probe.y][probe.x] == 0
+            # console.log "WAY TO GO, " + vehicle.driver
+            p.x = probe.x
+            p.y = probe.y
+            acceptable = true
 
-    point = 
-      x: current.x
-      y: current.y
+    # console.log "DONE CALCULATING!", p
+    vehicle.pushWaypoint p
 
-    while isReachable is false
-      point.x = Math.floor( Math.random() * (@tilesX-1) )
-      point.y = Math.floor( Math.random() * (@tilesZ-1) )
-      if point is not current
-        if @tiles[z][x] is 0
-          point.x = x
-          point.y = z
-          isReachable = true
 
-    console.log vehicle.driver + " : NEW DESTINATION = [#{point.x}, #{point.y}]"
-    return point
-    

@@ -14,12 +14,31 @@ class Taxi extends Vehicle
         y: 2
     }]
 
-    # @fsm = StateMachine.create
-    #   initial: 'parking',
-    #   events: [
-    #     { name: 'start', from: 'parking', to: 'driving' }
-    #     { name: 'stop', from: 'driving', to: 'parking' }
-    #   ],
-    #   callbacks:
-    #     onstart: (event, from, to) ->
-    #       console.log "ENTERING " + to
+
+  trace: ->
+    super()
+    E.trigger 'tracking'
+
+
+  setRoute: (route) ->
+    if route
+      if route.length > 0
+        path = @driver + " : NEW ROUTE = "
+        for w in route
+          path += "(#{w.x},#{w.y}) -> "
+        console.log path + " ..."
+        @waypoints.push route
+        @determineDirection()
+        if @gear is 0
+          @gearUp()
+
+
+  # @fsm = StateMachine.create
+  #   initial: 'parking',
+  #   events: [
+  #     { name: 'start', from: 'parking', to: 'driving' }
+  #     { name: 'stop', from: 'driving', to: 'parking' }
+  #   ],
+  #   callbacks:
+  #     onstart: (event, from, to) ->
+  #       console.log "ENTERING " + to
