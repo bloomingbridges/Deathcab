@@ -6,10 +6,8 @@
 W = 
   BLOCK: 
     width: 5
-    height: 5
+    height: 3
     tiles: [
-      [0,0,0,0,0],
-      [0,5,0,5,0],
       [0,0,0,0,0],
       [0,5,0,5,0],
       [0,0,0,0,0]
@@ -45,6 +43,16 @@ D =
   EAST: [1,0]
   SOUTH: [0,1]
   WEST: [-1,0]
+
+  PARSE: (numbers) ->
+    if numbers == D.NORTH
+      return "NORTH"
+    if numbers == D.EAST
+      return "EAST"
+    if numbers == D.SOUTH
+      return "SOUTH"
+    if numbers == D.WEST
+      return "WEST"
 
 
 #
@@ -90,4 +98,26 @@ E =
 #
 
 A = new EasyStar.js()
+
+
+#
+# Pakku Debugger
+#
+
+class Pakku
+
+  constructor: (@id, @colour) ->
+    @element = $('<section />', { class: 'info' }).data('pakku', @id)
+    @element.append $('<span />', { text: @id, css: { color: @colour } }).data('info', @id)
+    @element.append $('<span />', { text: "Sector" }).data('info', 'sector')
+    @element.append $('<span />', { text: "Options" }).data('info', 'options')
+    @element.append $('<span />', { text: "Direction" }).data('info', 'direction')
+    @element.append $('<span />', { text: "" }).data('info', 'message')
+    $('#debug').append @element
+
+  log: (node, data) ->
+    if node is "message"
+      @element.find("span[data-info=message]").html data
+    else
+      @element.find("span[data-info=#{node}]").html "#{node}<br />" + data
 

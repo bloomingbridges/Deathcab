@@ -158,6 +158,44 @@ a:focus, a:hover, a:active {
     opacity: 1.0;
 }
 
+#debug {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.info {
+    color: white;
+    font-size: 12px;
+    text-align: left;
+    line-height: 16px;
+    margin-top: 14px;
+    margin-left: 14px;
+    position: relative;
+    width: 140px;
+    overflow: auto;
+    float: left;
+    /*background-color: rgba(0,0,0,0.6)*/
+}
+
+.info span {
+    width: 100%;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.info span em {
+    color: aquamarine;
+    font-style: normal;
+    margin-left: 8px;
+}
+
+span[data-info=message] {
+    color: #888888;
+    margin-top: 12px;
+}
+
 #total {
     color: white;
 }

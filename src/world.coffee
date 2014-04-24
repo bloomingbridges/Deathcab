@@ -31,8 +31,8 @@ class World
     
     @taxi = new Taxi
     @scene.add @taxi.mesh
-    E.bind 'tracking', @trackVehicle
     @generateTraffic()
+    E.bind 'entering', @calculateOptions
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.y = 450
@@ -65,17 +65,11 @@ class World
   update: ->
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
-    if @taxi.meandering and @taxi.hasReachedFinalWaypoint()
-      @calculateNextTurn @taxi
     @camera.position.x = @taxi.mesh.position.x
     @camera.position.z = @taxi.mesh.position.z + 300
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @manageTraffic deltaTime
     @renderer.render @scene, @camera
-
-
-  trackVehicle: =>
-    $('#debug').html "<br />X: " + @taxi.sectorX + ", Z: " + @taxi.sectorZ
 
 
   generateTraffic: ->
@@ -101,18 +95,40 @@ class World
 
     for g, n in ghosts
       car = new Vehicle g.colour, g.name
-      car.place n, 0, D.SOUTH
-      @calculateNextTurn car
+      car.place n*2, 0, D.SOUTH
       @traffic.push car
       @scene.add car.mesh
       car.startMeandering()
 
 
+  calculateOptions: (vehicle) =>
+    possibleDirections = []
+    for dir in [D.SOUTH, D.EAST, D.WEST, D.NORTH]
+      if @adjacentTileReachable vehicle.sectorX, vehicle.sectorZ, dir
+        possibleDirections.push dir
+    vehicle.setAvailableOptions possibleDirections
+
+
+  adjacentTileReachable: (x, z, direction) ->
+    pX = x + direction[0]
+    pZ = z + direction[1]
+    if pZ >= 0 and pZ < @tilesZ
+      if pX >= 0 and pX < @tilesX
+        tile = @tiles[pZ][pX]
+        if tile is 0
+          console.log "OPTION [#{pX},#{pZ}]"
+          return true
+        else 
+          return false
+      else
+        return false
+    else 
+      return false
+
+
   manageTraffic: (dT) ->
     for v in @traffic
       v.update dT
-      if v.meandering and v.hasReachedFinalWaypoint()
-        @calculateNextTurn v 
 
 
   generateWorldMap: (width, height) ->
@@ -136,22 +152,22 @@ class World
       for col, j in @tiles[i]
         if col is 9
           tile = new THREE.Mesh G.street, M.river
-          tile.position.x = j * 100
+          tile.position.x = j * 100 #- 25
           tile.position.y = -25
-          tile.position.z = i * 100
+          tile.position.z = i * 100 #- 25
           tile.receiveShadow = true
           @scene.add tile
         else if col < 5
           tile = new THREE.Mesh G.street, M.street
-          tile.position.x = j * 100
-          tile.position.z = i * 100
+          tile.position.x = j * 100 #- 25
+          tile.position.z = i * 100 #- 25
           tile.receiveShadow = true
           @scene.add tile
         else
           tile = new THREE.Mesh G.building, M.building
-          tile.position.x = j * 100
+          tile.position.x = j * 100 #- 25
           tile.position.y = Math.random() * 45
-          tile.position.z = i * 100
+          tile.position.z = i * 100 #- 25
           tile.receiveShadow = true
           tile.castShadow = true
           @scene.add tile
@@ -179,31 +195,5 @@ class World
   #   console.log vehicle.driver + " : NEW DESTINATION = [#{point.x}, #{point.y}]"
   #   A.findPath vehicle.sectorX, vehicle.sectorZ, point.x, point.y, vehicle.setRoute
   #   A.calculate()
-
-
-  calculateNextTurn: (vehicle) =>
-    # console.log "CALCULATING.."
-    dirs = [D.NORTH,D.EAST,D.SOUTH,D.WEST]
-    # TODO Make sure cars do not reverse
-    p = 
-      x: vehicle.sectorX
-      y: vehicle.sectorZ
-    acceptable = false
-    result = while acceptable is false
-      r = Math.floor( Math.random() * 4 )
-      probingDir = dirs[r]
-      probe =
-        x: p.x + probingDir[0]
-        y: p.y + probingDir[1]
-      if probe.y >= 0 and probe.y < @tilesZ
-        if probe.x >= 0 and probe.x < @tilesX
-          if @tiles[probe.y][probe.x] == 0
-            # console.log "WAY TO GO, " + vehicle.driver
-            p.x = probe.x
-            p.y = probe.y
-            acceptable = true
-
-    # console.log "DONE CALCULATING!", p
-    vehicle.pushWaypoint p
 
 

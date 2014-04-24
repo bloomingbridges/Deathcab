@@ -19,7 +19,7 @@ class Prompt
     @element.val ""
 
   expandOptions: ->
-    @options = ['next', 'prev', 'stop', 'up', 'right', 'down', 'left', 'change gear to ?']
+    @options = ['auto', 'next', 'prev', 'stop', 'up', 'right', 'down', 'left', 'change gear to ?']
 
   onInput: (event) =>
     choice = @element.val()

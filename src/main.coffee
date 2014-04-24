@@ -5,7 +5,7 @@ class Deathcab
   
   constructor: ->
     # console.log "Welcome to d e a t h c a b"
-    @world = new World $('#scenery'), W.BLOCK
+    @world = new World $('#scenery'), W.DEFAULT
     @player = @world.taxi
     @prompt = new Prompt $('#prompt')
     E.bind 'choice', @mediate
@@ -28,6 +28,8 @@ class Deathcab
       $('#gear').text @player.gear
     else if ["up","right","down","left"].indexOf(choice) >= 0
       @debugControl choice
+    else if choice is "auto"
+      @player.automatic = true
 
   start: () =>
     $('#intro').css 'opacity', 0
@@ -38,6 +40,7 @@ class Deathcab
       $('#hints li.xcore').hide()
       $('#prompt').blur()
       @player.startMeandering()
+
     $('#hints').addClass 'visible'
     @prompt.expandOptions()
 
@@ -50,6 +53,7 @@ class Deathcab
       @player.forwards = D.SOUTH
     else if (direction is "left")
       @player.forwards = D.WEST
+    @player.automatic = false
 
   update: =>
     @world.update()

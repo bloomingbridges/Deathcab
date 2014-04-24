@@ -8,29 +8,40 @@ class Taxi extends Vehicle
     @mesh = new THREE.Mesh G.vehicle, M.taxi
     @mesh.position.y = 25
     @driver = "Player"
-    @place 0, 1, D.SOUTH
-    @waypoints = [{
-        x: 0
-        y: 2
-    }]
-
-
-  trace: ->
-    super()
-    E.trigger 'tracking'
+    @pakku = new Pakku @driver, 'aquamarine'
+    @place 0, 0, D.SOUTH
+    @meandering = true
+    @automatic = true
+    # @waypoints = [
+    #   { x: 0, y: 2 },
+    #   { x: 1, y: 2 },
+    #   { x: 2, y: 2 },
+    #   { x: 2, y: 3 },
+    #   { x: 2, y: 4 },
+    #   { x: 1, y: 4 },
+    #   { x: 0, y: 4 },
+    #   { x: 0, y: 3 },
+    # ]
 
 
   setRoute: (route) ->
-    if route
-      if route.length > 0
-        path = @driver + " : NEW ROUTE = "
-        for w in route
-          path += "(#{w.x},#{w.y}) -> "
-        console.log path + " ..."
-        @waypoints.push route
-        @determineDirection()
-        if @gear is 0
-          @gearUp()
+    path = @driver + " : NEW ROUTE = "
+    for w in route
+      path += "(#{w.x},#{w.y}) -> "
+    console.log path + " ..."
+    @waypoints.push route
+    @determineDirection()
+    if @gear is 0
+      @gearUp()
+
+
+  setAvailableOptions: (options) ->
+    @availableOptions = options
+    optionString = "Options:"
+    for o in options
+      optionString += "<br /><em>#{D.PARSE o}</em>"
+    $('span[data-info=options]').html optionString
+    @determineDirection() if @meandering and @automatic
 
 
   # @fsm = StateMachine.create
