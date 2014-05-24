@@ -32,7 +32,7 @@ class World
     @taxi = new Taxi
     @scene.add @taxi.mesh
     @generateTraffic()
-    E.bind 'entering', @calculateOptions
+    E('entering').subscribe(@calculateOptions, @)
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
     @camera.position.y = 450

@@ -55,7 +55,7 @@ class Vehicle
       @previousZ = @sectorZ
       @sectorX = x
       @sectorZ = z
-      E.trigger 'entering', @
+      E('entering').broadcast(@)
       if not @meandering
         @hasReachedWaypoint()
 
@@ -72,6 +72,7 @@ class Vehicle
       
 
   setAvailableOptions: (@availableOptions) ->
+    @pakku.log 'options', @availableOptions
     @determineDirection()
 
 

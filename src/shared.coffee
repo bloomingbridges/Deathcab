@@ -79,18 +79,12 @@ M =
 
 
 #
-# Events
+# Radio
 #
-# A global object to register custom Events with
+# A global radio instance for publishing and subscribing to custom events 
 #
 
-E =
-  events: {}
-  bind: (topic, handler, context = this) ->
-    (@events[topic] ||= []).push { handler, context }
-  trigger: (topic, args...) ->
-    if @events[topic]?
-      event.handler.apply event.context, args for event in @events[topic]
+E = radio
 
 
 #
@@ -116,8 +110,14 @@ class Pakku
     $('#debug').append @element
 
   log: (node, data) ->
-    if node is "message"
-      @element.find("span[data-info=message]").html data
-    else
-      @element.find("span[data-info=#{node}]").html "#{node}<br />" + data
+    switch node
+      when 'message'
+        @element.find("span[data-info=message]").html data
+      when 'options'
+        optionString = "Options:"
+        for o in data
+          optionString += "<br /><em>#{D.PARSE o}</em>"
+        @element.find("span[data-info=options]").html optionString    
+      else
+        @element.find("span[data-info=#{node}]").html "#{node}<br />" + data
 

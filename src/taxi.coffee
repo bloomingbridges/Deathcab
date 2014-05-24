@@ -35,12 +35,8 @@ class Taxi extends Vehicle
       @gearUp()
 
 
-  setAvailableOptions: (options) ->
-    @availableOptions = options
-    optionString = "Options:"
-    for o in options
-      optionString += "<br /><em>#{D.PARSE o}</em>"
-    $('span[data-info=options]').html optionString
+  setAvailableOptions: (@availableOptions) ->
+    @pakku.log 'options', @availableOptions
     @determineDirection() if @meandering and @automatic
 
 

@@ -25,7 +25,7 @@ class Prompt
     choice = @element.val()
     if (@options.indexOf(choice) > -1) 
       console.log "CHOICE :", choice.toUpperCase()
-      E.trigger 'choice', choice
+      E('choice').broadcast(choice)
 
   onFocus: (event) =>
     $('#prompt_container').addClass 'active'

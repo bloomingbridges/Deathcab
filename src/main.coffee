@@ -8,7 +8,7 @@ class Deathcab
     @world = new World $('#scenery'), W.DEFAULT
     @player = @world.taxi
     @prompt = new Prompt $('#prompt')
-    E.bind 'choice', @mediate
+    E('choice').subscribe(@mediate)
     @update()
   
   mediate: (choice) =>
@@ -32,6 +32,7 @@ class Deathcab
       @player.automatic = true
 
   start: () =>
+    E('choice').unsubscribe(@mediate)
     $('#intro').css 'opacity', 0
     $('#scenery').removeClass 'dimmed'
     if @xcore
