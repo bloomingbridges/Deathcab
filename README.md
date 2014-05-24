@@ -55,8 +55,7 @@ $ gulp develop
 There is quite a lot to do still..
 
 - Define overall architecture
-- Write city generator
-- Write traffic system (using pathfinding)
+- Write a _more intricate_ city generator
 - Write passenger transportation and chat system
 - Write some test dialog for default passenger types
 - See if radio functionality is a go
