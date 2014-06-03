@@ -9,9 +9,11 @@ class Taxi extends Vehicle
     @mesh.position.y = 25
     @driver = "Player"
     @pakku = new Pakku @driver, 'aquamarine'
-    @place 0, 0, D.SOUTH
+    @place 0, 0, D.EAST
     @meandering = true
     @automatic = true
+    @gear = 3
+
     # @waypoints = [
     #   { x: 0, y: 2 },
     #   { x: 1, y: 2 },
@@ -33,7 +35,6 @@ class Taxi extends Vehicle
     @determineDirection()
     if @gear is 0
       @gearUp()
-
 
   setAvailableOptions: (@availableOptions) ->
     @pakku.log 'options', @availableOptions

@@ -39,10 +39,10 @@ W =
 #
 
 D =
-  NORTH: [0,-1]
-  EAST: [1,0]
-  SOUTH: [0,1]
-  WEST: [-1,0]
+  NORTH: [0,-1,Math.PI*.5]
+  EAST: [1,0,Math.PI*0]
+  SOUTH: [0,1,Math.PI*1.5]
+  WEST: [-1,0,Math.PI*1]
 
   PARSE: (numbers) ->
     if numbers == D.NORTH
@@ -61,8 +61,29 @@ D =
 # Hold geometry and material declarations respectively
 #
 
+S =
+  carOptions:
+    # this was just kind of figured out through trial and error its doesn't seem to be...
+    # ...by pixels like everything else
+    amount: 5
+    bevelThickness:3;
+
+  carShape: ()->
+    carLength = 24
+    carHeight = 8
+    carShape = new THREE.Shape
+    carShape.moveTo 0 - carLength*.5, 0
+    carShape.lineTo 0 - carLength*.5, carHeight*.5
+    carShape.lineTo carLength*.2 - carLength*.5, carHeight
+    carShape.lineTo carLength*.6 - carLength*.5, carHeight
+    carShape.lineTo carLength*.8 - carLength*.5, carHeight*.5
+    carShape.lineTo carLength - carLength*.5, carHeight*.5
+    carShape.lineTo carLength - carLength*.5, 0
+    carShape.lineTo 0 - carLength*.5, 0
+    carShape
+
 G =
-  vehicle: new THREE.SphereGeometry 10, 8, 1
+  vehicle: new THREE.ExtrudeGeometry S.carShape(), S.carOptions
   street: new THREE.CubeGeometry 110, 20, 110
   building: new THREE.CubeGeometry 100, 100, 100
 

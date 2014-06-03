@@ -10,43 +10,25 @@ class Deathcab
     
 
     @prompt = new Prompt $('#prompt'), [@gear, @turn, @radio]
-    E.bind 'choice', @mediate
-    # I dont know what this does
-    #E('choice').subscribe(@mediate)
+    E('choice').subscribe [@mediate,@]
 
-    #default autostart in hardcore mode
+    #default an autostart in hardcore mode
     @xcore = true
     @start()
 
     @update()
   
   mediate: (choice) =>
-    # @prompt.wipe()
     # if choice is "life" || choice is "death"
     #   @xcore = choice is "death"
     #   @start()
-    # else if choice is "next"
-    #   @player.gearUp()
-    # else if choice is "prev"
-    #   @player.gearDown() 
-    # else if choice is "stop"
-    #   @player.setGear 0
-    #   $('#gear').text 0
-    # else if choice is "change gear to ?"
-    #   @player.setGear Math.floor(Math.random() * 5)
-    #   $('#gear').text @player.gear
-    # else if ["up","right","down","left"].indexOf(choice) >= 0
-    #   @debugControl choice
-    # else if choice is "auto"
-    #   @player.automatic = true
-
-
-    debugger
+    
     console.log choice
     choice.functions[0].call(this,choice.arguments[0])
+    #choice.functions[0] choice.arguments[0]
 
   start: () =>
-    E('choice').unsubscribe(@mediate)
+    #E('choice').unsubscribe(@mediate)
     $('#intro').css 'opacity', 0
     $('#scenery').removeClass 'dimmed'
     if @xcore
@@ -96,7 +78,7 @@ class Deathcab
     callback: (anArgument) ->
       unless anArgument?
         console.log "turn"
-        $('#hint gear').hide()
+        #$('#hint gear').hide()
       else
         console.log "turn ".concat(anArgument)
         switch anArgument
@@ -104,8 +86,9 @@ class Deathcab
           when "east" then @player.setHeading D.EAST
           when "south" then @player.setHeading D.SOUTH
           when "west" then @player.setHeading D.WEST
-          when "right","left" then @player.turnRelative anArgument
 
+          #removed because there is no right left input whooopsss
+          #when "right","left" then @player.setHeading anArgument
   }
 
   radio: {

@@ -116,7 +116,7 @@ class World
       if pX >= 0 and pX < @tilesX
         tile = @tiles[pZ][pX]
         if tile is 0
-          console.log "OPTION [#{pX},#{pZ}]"
+          #console.log "OPTION [#{pX},#{pZ}]"
           return true
         else 
           return false

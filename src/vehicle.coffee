@@ -28,6 +28,12 @@ class Vehicle
     if @gear > 0
       @trace()
 
+    ## this code is very important
+    #@mesh.rotation.y = @mesh.position.x 
+
+    ## however this is the correct code
+    @mesh.rotation.y = @forwards[2]
+
 
   getSpeed: ->
     return @topSpeeds[@gear]
@@ -49,7 +55,7 @@ class Vehicle
     x = Math.floor( @mesh.position.x / 100 )
     z = Math.floor( @mesh.position.z / 100 )
     if x != @sectorX or z != @sectorZ
-      console.log @driver + " : ENTERED = [#{x},#{z}]"
+      #console.log @driver + " : ENTERED = [#{x},#{z}]"
       @pakku.log 'sector', "<em>X: #{x}</em><br /><em>Z: #{z}</em>"
       @previousX = @sectorX
       @previousZ = @sectorZ
@@ -59,6 +65,9 @@ class Vehicle
       if not @meandering
         @hasReachedWaypoint()
 
+
+  setHeading: (heading) ->
+    @forwards = heading;
 
   setDirection: (direction) ->
     if @forwards != direction
@@ -94,18 +103,19 @@ class Vehicle
     else
       if @availableOptions.length > 0
         if $.inArray(@forwards, @availableOptions) == -1
-          console.log @driver + " : FORWARDS NOT AN OPTION!", @availableOptions
+          #console.log @driver + " : FORWARDS NOT AN OPTION!", @availableOptions
+          
           # TODO Choose the one that isn't backwards
           backwards = [@forwards[0]*-1,@forwards[1]*-1]
           index = $.inArray(backwards, @availableOptions)
           if index >= 0
-            console.log "BACKWARDS!", @availableOptions[index]
+            #console.log "BACKWARDS!", @availableOptions[index]
             @availableOptions.splice index, 1
           r = Math.floor(Math.random() * @availableOptions.length)
           @setDirection @availableOptions[r]
       else
         @setGear 0
-        console.log @driver + " : STUCK"
+        #console.log @driver + " : STUCK"
 
 
   pushWaypoint: (point) ->
@@ -116,10 +126,10 @@ class Vehicle
   hasReachedWaypoint: ->
     p = @waypoints[0]
     if p.x is @sectorX and p.y is @sectorZ 
-      console.log @driver + " : WAYPOINT REACHED [#{p.x},#{p.y}]"
+      #console.log @driver + " : WAYPOINT REACHED [#{p.x},#{p.y}]"
       @waypoints.splice 0, 1
       if @waypoints.length > 0
-        console.log @driver + " : " + @waypoints.length + " MORE! NEXT UP =",
+        #console.log @driver + " : " + @waypoints.length + " MORE! NEXT UP =",
         "[#{@waypoints[0].x}, #{@waypoints[0].y}]"
         @determineDirection()
       else

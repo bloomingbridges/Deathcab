@@ -33,7 +33,7 @@ class Prompt
       if @options.length is 2
         if (@options.indexOf(choice) > -1) 
           console.log "CHOICE:", choice
-          E.trigger 'choice', choice
+          E('choice').boradcast choice
       else
         # pass guess object to suggestions listener
         # E.trigger 'suggest', guess
@@ -44,7 +44,7 @@ class Prompt
           @wipe()
           # if there is one guess
           #if guess.functions.length is 1 and guess.arguments.length is 1
-          E.trigger 'choice', guess
+          E('choice').broadcast guess
 
   onFocus: (event) =>
       $('#prompt_container').addClass 'active'
