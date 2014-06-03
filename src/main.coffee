@@ -7,29 +7,43 @@ class Deathcab
     # console.log "Welcome to d e a t h c a b"
     @world = new World $('#scenery'), W.DEFAULT
     @player = @world.taxi
-    @prompt = new Prompt $('#prompt')
-    E('choice').subscribe(@mediate)
+    
+
+    @prompt = new Prompt $('#prompt'), [@gear, @turn, @radio]
+    E.bind 'choice', @mediate
+    # I dont know what this does
+    #E('choice').subscribe(@mediate)
+
+    #default autostart in hardcore mode
+    @xcore = true
+    @start()
+
     @update()
   
   mediate: (choice) =>
-    @prompt.wipe()
-    if choice is "life" || choice is "death"
-      @xcore = choice is "death"
-      @start()
-    else if choice is "next"
-      @player.gearUp()
-    else if choice is "prev"
-      @player.gearDown() 
-    else if choice is "stop"
-      @player.setGear 0
-      $('#gear').text 0
-    else if choice is "change gear to ?"
-      @player.setGear Math.floor(Math.random() * 5)
-      $('#gear').text @player.gear
-    else if ["up","right","down","left"].indexOf(choice) >= 0
-      @debugControl choice
-    else if choice is "auto"
-      @player.automatic = true
+    # @prompt.wipe()
+    # if choice is "life" || choice is "death"
+    #   @xcore = choice is "death"
+    #   @start()
+    # else if choice is "next"
+    #   @player.gearUp()
+    # else if choice is "prev"
+    #   @player.gearDown() 
+    # else if choice is "stop"
+    #   @player.setGear 0
+    #   $('#gear').text 0
+    # else if choice is "change gear to ?"
+    #   @player.setGear Math.floor(Math.random() * 5)
+    #   $('#gear').text @player.gear
+    # else if ["up","right","down","left"].indexOf(choice) >= 0
+    #   @debugControl choice
+    # else if choice is "auto"
+    #   @player.automatic = true
+
+
+    debugger
+    console.log choice
+    choice.functions[0].call(this,choice.arguments[0])
 
   start: () =>
     E('choice').unsubscribe(@mediate)
@@ -59,6 +73,87 @@ class Deathcab
   update: =>
     @world.update()
     @rAFID = requestAnimationFrame @update
+
+#
+# all the methods for controlling the player
+# I think its best to put these in this scope for now because that way you have access to the player and world
+#
+
+  turn: {
+    possibleFunctions: [
+      "turn"
+      "go"
+      "drive"
+    ]
+    possibleArguments: [
+      "north"
+      "south"
+      "east"
+      "west"
+      "left"
+      "right"
+    ]
+    callback: (anArgument) ->
+      unless anArgument?
+        console.log "turn"
+        $('#hint gear').hide()
+      else
+        console.log "turn ".concat(anArgument)
+        switch anArgument
+          when "north" then @player.setHeading D.NORTH
+          when "east" then @player.setHeading D.EAST
+          when "south" then @player.setHeading D.SOUTH
+          when "west" then @player.setHeading D.WEST
+          when "right","left" then @player.turnRelative anArgument
+
+  }
+
+  radio: {
+    possibleFunctions: [
+      "radio"
+      "tune"
+      "turn"
+      "change"
+      "station"
+    ]
+    possibleArguments: [
+      "on"
+      "off"
+      "up"
+      "down"
+    ]
+    callback: (anArgument) ->
+      unless anArgument?
+        console.log "radio"
+      else
+        console.log "change radio ".concat(anArgument)
+      return
+  }
+
+  gear: {
+    possibleFunctions: [
+      "gear"
+      "shift"
+      "change"
+      "go"
+    ]
+    possibleArguments: [
+      "up"
+      "down"
+      "next"
+      "prev"
+    ]
+    callback: (anArgument) ->
+      unless anArgument?
+        console.log "change gear"
+      else
+        console.log "change gear ".concat(anArgument)
+        switch anArgument
+          when "up", "next" then @player.gearUp()
+          when "down", "prev" then @player.gearDown()
+        $('#gear').text @player.gear
+  }
+
 
 
 #
