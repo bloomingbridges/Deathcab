@@ -40,6 +40,10 @@ class Taxi extends Vehicle
     @pakku.log 'options', @availableOptions
     @determineDirection() if @meandering and @automatic
 
+  getFocalPoint: ->
+    dist = 100
+    pov = new THREE.Vector3 @mesh.position.x+Math.cos(@forwards[2])*dist, @mesh.position.y, @mesh.position.z+Math.sin(@forwards[2])*dist
+    return pov
 
   # @fsm = StateMachine.create
   #   initial: 'parking',

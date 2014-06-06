@@ -39,9 +39,11 @@ W =
 #
 
 D =
-  NORTH: [0,-1,Math.PI*.5]
+  # NORTH: [0,-1,Math.PI*.5]
+  NORTH: [0,-1,Math.PI*1.5]
   EAST: [1,0,Math.PI*0]
-  SOUTH: [0,1,Math.PI*1.5]
+  # SOUTH: [0,1,Math.PI*1.5]
+  SOUTH: [0,1,Math.PI*.5]
   WEST: [-1,0,Math.PI*1]
 
   PARSE: (numbers) ->

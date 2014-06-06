@@ -29,8 +29,7 @@ class Vehicle
       @trace()
 
     ## this code is very important
-    #@mesh.rotation.y = @mesh.position.x 
-
+    #@mesh.rotation.y = @mesh.position.x*.25
     ## however this is the correct code
     @mesh.rotation.y = @forwards[2]
 

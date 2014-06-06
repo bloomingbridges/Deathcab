@@ -35,7 +35,9 @@ class World
     E('entering').subscribe(@calculateOptions, @)
 
     @camera = new THREE.PerspectiveCamera VIEW_ANGLE, ASPECT, NEAR, FAR
-    @camera.position.y = 450
+
+    #30 seems pretty good for the y pos
+    @camera.position.y = 30
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @scene.add @camera
 
@@ -65,9 +67,15 @@ class World
   update: ->
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
+
+    # @camera.position.x = @taxi.mesh.position.x
+    # @camera.position.z = @taxi.mesh.position.z + 300
+    # @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
+    
     @camera.position.x = @taxi.mesh.position.x
-    @camera.position.z = @taxi.mesh.position.z + 300
-    @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
+    @camera.position.z = @taxi.mesh.position.z 
+    @camera.lookAt @taxi.getFocalPoint()
+    
     @manageTraffic deltaTime
     @renderer.render @scene, @camera
 
