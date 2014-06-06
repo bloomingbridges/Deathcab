@@ -2,6 +2,7 @@
 class World
 
   traffic: []
+  firstPerson: true
 
   constructor: (@element, map) ->
     WIDTH = @element.width()
@@ -38,6 +39,7 @@ class World
 
     #30 seems pretty good for the y pos
     @camera.position.y = 30
+
     @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     @scene.add @camera
 
@@ -68,13 +70,17 @@ class World
     deltaTime = @clock.getDelta()
     @taxi.update deltaTime
 
-    # @camera.position.x = @taxi.mesh.position.x
-    # @camera.position.z = @taxi.mesh.position.z + 300
-    # @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     
     @camera.position.x = @taxi.mesh.position.x
-    @camera.position.z = @taxi.mesh.position.z 
+    @camera.position.z = @taxi.mesh.position.z
+    @camera.position.y = 30
     @camera.lookAt @taxi.getFocalPoint()
+
+    if @firstPerson is false
+      @camera.position.x = @taxi.mesh.position.x
+      @camera.position.z = @taxi.mesh.position.z + 300
+      @camera.position.y = 450
+      @camera.lookAt new THREE.Vector3 @taxi.mesh.position.x, 0, @taxi.mesh.position.z
     
     @manageTraffic deltaTime
     @renderer.render @scene, @camera
@@ -180,7 +186,8 @@ class World
           tile.castShadow = true
           @scene.add tile
 
-    
+  setFirstPerson: (bool) ->
+    @firstPerson = bool;  
   # generateRandomDestinationForVehicle: (vehicle) ->
     
   #   current = 

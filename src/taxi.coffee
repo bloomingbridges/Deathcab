@@ -4,6 +4,8 @@ class Taxi extends Vehicle
   _passenger: 
     name: "Howard"
 
+    
+
   constructor: ->
     @mesh = new THREE.Mesh G.vehicle, M.taxi
     @mesh.position.y = 25
@@ -13,7 +15,7 @@ class Taxi extends Vehicle
     @meandering = true
     @automatic = true
     @gear = 3
-
+    
     # @waypoints = [
     #   { x: 0, y: 2 },
     #   { x: 1, y: 2 },

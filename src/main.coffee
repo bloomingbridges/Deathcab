@@ -9,7 +9,7 @@ class Deathcab
     @player = @world.taxi
     
 
-    @prompt = new Prompt $('#prompt'), [@gear, @turn, @radio]
+    @prompt = new Prompt $('#prompt'), [@gear, @turn, @radio, @changePerspective]
     E('choice').subscribe [@mediate,@]
 
     #default an autostart in hardcore mode
@@ -135,6 +135,29 @@ class Deathcab
           when "up", "next" then @player.gearUp()
           when "down", "prev" then @player.gearDown()
         $('#gear').text @player.gear
+      return
+  }
+
+  changePerspective: {
+    possibleFunctions:[
+      "debug"
+      "person"
+      "veiw"
+    ]
+    possibleArguments:[
+      "first"
+      "third"
+      "true"
+      "false"
+    ]
+    callback: (anArgument) ->
+      unless anArgument?
+        console.log "debug"
+      else
+        switch anArgument
+          when "first","true" then @world.setFirstPerson true
+          when "third","false" then @world.setFirstPerson false
+      return
   }
 
 
